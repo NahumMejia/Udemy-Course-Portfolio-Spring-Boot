@@ -5,6 +5,7 @@ import com.portfolio.demo.Model.PersonalInformation;
 import com.portfolio.demo.Repository.IPersonalInformationRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.BindingResult;
 
@@ -19,6 +20,7 @@ public class PersonalInformationServiceImplement implements IPersonalInformation
     private final IPersonalInformationRepository personalInformationRepository;
 
     @Override
+    @Transactional
     public PersonalInformation save(PersonalInformation personalInformation) {
         BindingResult result = new BeanPropertyBindingResult(personalInformation, "personalInfo");
         validator.validate(personalInformation, result);
@@ -29,16 +31,19 @@ public class PersonalInformationServiceImplement implements IPersonalInformation
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Optional<PersonalInformation> findById(Long id) {
         return personalInformationRepository.findById(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<PersonalInformation> findAll() {
         return personalInformationRepository.findAll();
     }
 
     @Override
+    @Transactional
     public void deleteById(Long id) {
         personalInformationRepository.deleteById(id);
     }
